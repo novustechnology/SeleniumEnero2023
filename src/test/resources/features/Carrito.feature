@@ -3,6 +3,7 @@ Feature: Compra de un articulo con Tarjeta de Credito
   Quiero comprar un articulo con una tarjeta de credito
   Para ahorrar tiempo en hacer un tramite personal
 
+  @Carrito
   Scenario: Compro una sola vez
     Given la pagina DemoGuru esta disponible
     When doy click en generar tarjeta
