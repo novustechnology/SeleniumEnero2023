@@ -15,8 +15,6 @@ public class DatosTarjetaPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    public String VENTANA_ORIGINAL;
-
     protected static String tarjeta;
 
     protected static String cvv;
@@ -24,7 +22,6 @@ public class DatosTarjetaPage extends BasePage {
     protected static String mes;
 
     protected static String anio;
-
 
     @FindBy(xpath = "//h4[1]")
     private WebElement lblNroTarjeta;
@@ -35,6 +32,7 @@ public class DatosTarjetaPage extends BasePage {
     @FindBy(xpath = "//h4[3]")
     private WebElement lblFechaExp;
 
+    public String VENTANA_ORIGINAL;
 
     public void cambiarVentana() {
         VENTANA_ORIGINAL = driver.getWindowHandle();
