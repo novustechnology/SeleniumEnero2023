@@ -3,6 +3,7 @@ package step;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import page.FormularioPage;
 
 public class FormularioStep {
@@ -16,7 +17,8 @@ public class FormularioStep {
 
     @Given("ingreso a la pagina TutorialsPoint")
     public void ingresoALaPaginaTutorialsPoint() {
-        Hooks.driver.get("https://www.tutorialspoint.com/selenium/selenium_automation_practice.htm");
+        //Hooks.driver.get("https://www.tutorialspoint.com/selenium/selenium_automation_practice.htm");
+        formularioPage.ingresarUrl();
     }
 
     @And("ingreso los datos del formulario")
@@ -31,6 +33,18 @@ public class FormularioStep {
     }
 
     @And("selecciono el continente {string} y los comandos de selenium")
-    public void seleccionoElContinenteYLosComandosDeSelenium(String arg0) {
+    public void seleccionoElContinenteYLosComandosDeSelenium(String continente) {
+        formularioPage.seleccionarContinente(continente);
+        formularioPage.seleccionarComandoSelenium();
+    }
+
+    @Then("hacemos click en el boton enviar")
+    public void hacemosClickEnElBotonEnviar() {
+        formularioPage.clickBotonEnviar();
+    }
+
+    @Then("ingresamos la data")
+    public void ingresamosLaData() {
+
     }
 }

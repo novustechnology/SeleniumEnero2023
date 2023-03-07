@@ -1,14 +1,23 @@
 package page;
 
 import base.BasePage;
+import base.ConfigFileReader;
 import io.cucumber.datatable.DataTable;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import util.Util;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +27,7 @@ public class FormularioPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
+    String CSV_FILE_PATH = "src/test/resources/data/test.csv";
 
     @FindBy(id = "banner-accept")
     private WebElement btnBanner;
@@ -30,6 +40,17 @@ public class FormularioPage extends BasePage {
 
     @FindBy(name = "photo")
     private WebElement btnImagen;
+
+    @FindBy(name = "continents")
+    private WebElement cbContinente;
+
+    @FindBy(xpath = "//button[text()='Button']")
+    private WebElement btnEnviar;
+
+
+    public void ingresarUrl() {
+        driver.get(ConfigFileReader.getProp("url"));
+    }
 
 
     public void ingresarDatosFormulario(DataTable dataTable) {
@@ -46,6 +67,30 @@ public class FormularioPage extends BasePage {
         }
 
     }
+
+
+    public void ingresarDatosCsv() {
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(btnBanner)).click();
+            Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH));
+            CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withHeader());
+
+            for (CSVRecord csvRecord : csvParser) {
+                txtFirstname.sendKeys(csvRecord.get("firstName"));
+
+
+
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 
     public void cargarImagen() throws InterruptedException {
         btnImagen.sendKeys("D:\\Proyectos Intellij\\SeleniumFebrero\\src\\test\\resources\\data\\cucumber.png");
@@ -64,7 +109,30 @@ public class FormularioPage extends BasePage {
         WebElement seleniumTipo = driver.findElement(By.xpath("//input[@value='" + tipoSelenium + "']"));
         System.out.println("isEnabled " + seleniumTipo.isEnabled());
         System.out.println("isSelected " + seleniumTipo.isSelected());
-        System.out.println("isDisplayed "+seleniumTipo.isDisplayed());
+        System.out.println("isDisplayed " + seleniumTipo.isDisplayed());
     }
+
+    public void seleccionarContinente(String continente) {
+        new Select(cbContinente).selectByVisibleText(continente);
+    }
+
+    public void seleccionarComandoSelenium() {
+        Actions actions = new Actions(driver);
+        actions.keyDown(Keys.LEFT_CONTROL)
+                .click(driver.findElement(By.xpath("//option[text()='Browser Commands']")))
+                .click(driver.findElement(By.xpath("//option[text()='Navigation Commands']")))
+                .keyUp(Keys.LEFT_CONTROL)
+                .build()
+                .perform();
+        //Util.scrollToElement(btnEnviar);
+    }
+
+    public void clickBotonEnviar() {
+        btnEnviar.click();
+        wait.until(ExpectedConditions.alertIsPresent()).dismiss();
+        //Alert alerta = driver.switchTo().alert();
+        //alerta.accept();
+    }
+
 
 }
