@@ -10,7 +10,7 @@ Feature: Automatización de Formulario
     And selecciono el continente "North America" y los comandos de selenium
     Then hacemos click en el boton enviar
 
-    @Csv
-    Scenario: Ingreso de datos mediante Csv
-      Given ingreso a la pagina TutorialsPoint
-      Then ingresamos la data
+  @Csv
+  Scenario: Ingreso de datos mediante Csv
+    Given ingreso a la pagina TutorialsPoint
+    Then ingresamos la data

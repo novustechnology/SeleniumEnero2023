@@ -77,18 +77,14 @@ public class FormularioPage extends BasePage {
 
             for (CSVRecord csvRecord : csvParser) {
                 txtFirstname.sendKeys(csvRecord.get("firstName"));
-
-
-
-
+                txtLastname.sendKeys(csvRecord.get("lastName"));
+                driver.findElement(By.xpath("//input[@value='" + csvRecord.get("sex") + "']")).click();
+                driver.findElement(By.xpath("//span[text()='" + csvRecord.get("yearsExperience") + "']")).click();
+                driver.findElement(By.xpath("//input[@value='" + csvRecord.get("profession") + "']")).click();
             }
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
 
@@ -133,6 +129,4 @@ public class FormularioPage extends BasePage {
         //Alert alerta = driver.switchTo().alert();
         //alerta.accept();
     }
-
-
 }

@@ -45,6 +45,7 @@ public class FormularioStep {
 
     @Then("ingresamos la data")
     public void ingresamosLaData() {
+        formularioPage.ingresarDatosCsv();
 
     }
 }
